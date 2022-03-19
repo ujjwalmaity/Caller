@@ -18,9 +18,9 @@ packages:
   caller:
     dependency: "direct main"
     description:
-      name: caller
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "../caller"
+      relative: true
+    source: path
     version: "0.0.4"
   characters:
     dependency: transitive

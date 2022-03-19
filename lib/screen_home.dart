@@ -1,4 +1,6 @@
+import 'package:caller/caller.dart';
 import 'package:flutter/material.dart';
+import 'package:incoming_call/util.dart';
 
 class ScreenHome extends StatefulWidget {
   static const String id = 'screen_home';
@@ -10,6 +12,36 @@ class ScreenHome extends StatefulWidget {
 }
 
 class _ScreenHomeState extends State<ScreenHome> {
+  @override
+  void initState() {
+    super.initState();
+
+    Caller.onEvent.listen((CallEvent event) async {
+      debugPrint(event.toString());
+
+      String number = event.number;
+      int? duration = event.duration;
+
+      String? name = await getContactName(number);
+      if (name != null) debugPrint("[ Caller ] Name: $name");
+
+      switch (event.action) {
+        case CallAction.callEnded:
+          debugPrint('[ Caller ] Ended a call with number $number and duration $duration');
+          break;
+        case CallAction.onMissedCall:
+          debugPrint('[ Caller ] Missed a call from number $number');
+          break;
+        case CallAction.onIncomingCallAnswered:
+          debugPrint('[ Caller ] Accepted call from number $number');
+          break;
+        case CallAction.onIncomingCallReceived:
+          debugPrint('[ Caller ] Phone is ringing with number $number');
+          break;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -12,32 +12,7 @@ Future<void> initializeCaller() async {
   if (!permission) {
     await Caller.requestPermissions();
   } else {
-    await Caller.initialize(callerCallbackHandler);
-  }
-}
-
-// Defines a callback that will handle all background incoming events
-//
-// The duration will only have a value if the current event is `CallerEvent.callEnded`
-Future<void> callerCallbackHandler(CallerEvent event, String number, int? duration) async {
-  debugPrint("New event received from native $event");
-
-  String? name = await getContactName(number);
-  if (name != null) debugPrint("[ Caller ] Name: $name");
-
-  switch (event) {
-    case CallerEvent.callEnded:
-      debugPrint('[ Caller ] Ended a call with number $number and duration $duration');
-      break;
-    case CallerEvent.onMissedCall:
-      debugPrint('[ Caller ] Missed a call from number $number');
-      break;
-    case CallerEvent.onIncomingCallAnswered:
-      debugPrint('[ Caller ] Accepted call from number $number');
-      break;
-    case CallerEvent.onIncomingCallReceived:
-      debugPrint('[ Caller ] Phone is ringing with number $number');
-      break;
+    await Caller.initialize();
   }
 }
 
