@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:incoming_call/util.dart';
 import 'screen_home.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-
-  initializeCaller();
 
   runApp(const MyApp());
 }

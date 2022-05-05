@@ -1,6 +1,7 @@
 import 'package:caller/caller.dart';
 import 'package:flutter/material.dart';
 import 'package:incoming_call/util.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class ScreenHome extends StatefulWidget {
   static const String id = 'screen_home';
@@ -12,9 +13,17 @@ class ScreenHome extends StatefulWidget {
 }
 
 class _ScreenHomeState extends State<ScreenHome> {
-  @override
-  void initState() {
-    super.initState();
+  _getPermissions() async {
+    await [
+      Permission.phone,
+      Permission.contacts,
+    ].request();
+  }
+
+  _init() async {
+    await _getPermissions();
+
+    await initializeCaller();
 
     Caller.onEvent.listen((CallEvent event) async {
       debugPrint(event.toString());
@@ -40,6 +49,13 @@ class _ScreenHomeState extends State<ScreenHome> {
           break;
       }
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _init();
   }
 
   @override

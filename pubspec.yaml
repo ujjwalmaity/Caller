@@ -37,6 +37,7 @@ dependencies:
   caller:
     path: ../caller/
   contacts_service: ^0.6.3
+  permission_handler: ^9.2.0
 
 dev_dependencies:
   flutter_test:
